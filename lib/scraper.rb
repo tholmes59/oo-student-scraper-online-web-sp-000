@@ -14,28 +14,29 @@ class Scraper
         :profile_url => "#{student.attribute('href')}"
         }
         students << hash
+      end
     end
-    
-  end
-  students 
+    students 
   end
 
   def self.scrape_profile_page(profile_url)
-    
+    profile = {}
+    profile_page = Nokogiri::HTML(open(profile_url))
+    profile_links = profile_page.css(".social-icon-container").children.css("a").map { |x| x.attribute('href').value}
+    profile_links.each do |link|
+      if link.include?("linkedin")
+        profile[:linkedin] = link
+      elsif link.include?("github")
+        profile[:github] = link
+      elsif link.include?("twitter")
+        profile[:twitter] = link
+      else
+        profile[:blog] = link
+      end
+    end
+    profile[:profile_quote] = profile_page.css(".profile-quote").text if profile_page.css(".profile-quote")
+    profile[:bio] = profile_page.css("div.bio-content.content-holder div.description-holder p").text if profile_page.css("div.bio-content.content-holder div.description-holder p")
+    profile
   end
 
 end
-
-
-# index_page = Nokogiri::HTML(open(index_url))
-#     students = []
-#     index_page.css("div.roster-cards-container").each do |card|
-#       card.css(".student-card a").each do |student|
-#         student_profile_link = "#{student.attr('href')}"
-#         student_location = student.css('.student-location').text
-#         student_name = student.css('.student-name').text
-#         students << {name: student_name, location: student_location, profile_url: student_profile_link}
-#       end
-#     end
-#     students
-#   end

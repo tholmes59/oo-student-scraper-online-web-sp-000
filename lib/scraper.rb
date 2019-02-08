@@ -22,20 +22,20 @@ class Scraper
   def self.scrape_profile_page(profile_url)
     profile_page = Nokogiri::HTML(open(profile_url))
     profiles = {}
-    profile_page.css("").each do |profile|
+    # profile_page.css("").each do |profile|
         hash = {
-        :twitter => profile.css(".social-icon-container").children.css("a")[0].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[0],
-        :linkedin => profile.css(".social-icon-container").children.css("a")[1].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[1],
-        :github => profile.css(".social-icon-container").children.css("a")[2].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[2],
-        :blog => profile.css(".social-icon-container").children.css("a")[4].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[4],
-        :profile_quote => profile.css('.vitals-text-container .profile-quote').text if profile.css('.vitals-text-container .profile-quote').text,
-        :bio => profile.css('div.bio-content.content-holder div.description-holder p').text if profile.css('div.bio-content.content-holder div.description-holder p').text
+        :twitter => profile_page.css(".social-icon-container").children.css("a")[0].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[0],
+        :linkedin => profile_page.css(".social-icon-container").children.css("a")[1].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[1],
+        :github => profile_page.css(".social-icon-container").children.css("a")[2].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[2],
+        :blog => profile_page.css(".social-icon-container").children.css("a")[3].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[3],
+        :profile_quote => profile_page.css('.vitals-text-container .profile-quote').text if profile_page.css('.vitals-text-container .profile-quote').text,
+        :bio => profile_page.css('div.bio-content.content-holder div.description-holder p').text if profile_page.css('div.bio-content.content-holder div.description-holder p').text
         }
         profiles << hash
     end
-  end
+  
   profiles 
-  end
+ end
   
 
 end

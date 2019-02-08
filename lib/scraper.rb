@@ -37,20 +37,19 @@ class Scraper
   
   student = {}
     profile_page = Nokogiri::HTML(open(profile_url))
-    links = profile_page.css(".social-icon-container").children.css("a").map { |el| el.attribute('href').value}
-    links.each do |link|
-      if link.include?("linkedin")
-        student[:linkedin] = link
-      elsif link.include?("github")
-        student[:github] = link
-      elsif link.include?("twitter")
-        student[:twitter] = link
-      else
-        student[:blog] = link
-      end
-    end
-    student[:twitter] = profile_page.css(".social-icon-container").children.css("a")[0].attribute("href").value
-    # if profile_page.css(".social-icon-container").children.css("a")[0]
+    # links = profile_page.css(".social-icon-container").children.css("a").map { |el| el.attribute('href').value}
+    # links.each do |link|
+    #   if link.include?("linkedin")
+    #     student[:linkedin] = link
+    #   elsif link.include?("github")
+    #     student[:github] = link
+    #   elsif link.include?("twitter")
+    #     student[:twitter] = link
+    #   else
+    #     student[:blog] = link
+    #   end
+    # end
+    student[:twitter] = profile_page.css(".social-icon-container").children.css("a")[0].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[0]
     student[:linkedin] = profile_page.css(".social-icon-container").children.css("a")[1].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[1]
     student[:github] = profile_page.css(".social-icon-container").children.css("a")[2].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[2]
     student[:blog] = profile_page.css(".social-icon-container").children.css("a")[3].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[3]

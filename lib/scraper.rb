@@ -14,28 +14,13 @@ class Scraper
         :profile_url => "#{student.attribute('href')}"
         }
         students << hash
+      end
     end
-  end
-  students 
+    students 
   end
 
   def self.scrape_profile_page(profile_url)
-  #   profile = {}
-  #   profile_page = Nokogiri::HTML(open(profile_url))
-   
-  #   profile[:twitter] = profile_page.css(".social-icon-container").children.css("a")[0].attribute("href").value
-  #   if profile_page.css(".social-icon-container").children.css("a")[0]
-  #   profile[:linkedin] = profile_page.css(".social-icon-container").children.css("a")[1].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[1]
-  #   profile[:github] = profile_page.css(".social-icon-container").children.css("a")[2].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[2]
-  #   profile[:blog] = profile_page.css(".social-icon-container").children.css("a")[3].attribute("href").value if profile_page.css(".social-icon-container").children.css("a")[3]
-  #   profile[:profile_quote] = profile_page.css(".profile-quote").text if profile_page.css(".profile-quote")
-  #   profile[:bio] = profile_page.css("div.bio-content.content-holder div.description-holder p").text if profile_page.css("div.bio-content.content-holder div.description-holder p")
-  #   profile
-  # end
-  # end
-  
-  
-  profile = {}
+    profile = {}
     profile_page = Nokogiri::HTML(open(profile_url))
     profile_links = profile_page.css(".social-icon-container").children.css("a").map { |x| x.attribute('href').value}
     profile_links.each do |link|
@@ -51,9 +36,7 @@ class Scraper
     end
     profile[:profile_quote] = profile_page.css(".profile-quote").text if profile_page.css(".profile-quote")
     profile[:bio] = profile_page.css("div.bio-content.content-holder div.description-holder p").text if profile_page.css("div.bio-content.content-holder div.description-holder p")
-
     profile
   end
-
 
 end
